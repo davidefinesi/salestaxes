@@ -33,11 +33,10 @@ public class TestGetReceiptInformations {
 		
 			// recupero informazioni sul primo articolo
 			ReceiptVO receipt = helper.getReceiptInformations("BOOK", 12.49, true, false);
-			String finalPrice1 = receipt.getFinalPrice();
+			Double finalPrice1Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
 			String percentageTotalTax1 = receipt.getPercentageTotalTax();
 			
 			double expected = 12.49;
-			Double finalPrice1Double = new Double(finalPrice1.replace(",", "."));
 			
 			// verifico prezzo finale
 			assertEquals(finalPrice1Double.toString(), String.valueOf(expected));
@@ -45,20 +44,24 @@ public class TestGetReceiptInformations {
 			
 			// recupero informazioni sul secondo articolo
 			receipt = helper.getReceiptInformations("MUSIC CD", 14.99, false, false);
-			String finalPrice2 = receipt.getFinalPrice();
+			Double finalPrice2Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
 			String percentageTotalTax2 = receipt.getPercentageTotalTax();
 			
+			expected = 14.49;
+			
 			// verifico prezzo finale
-			assertEquals(finalPrice2, "16,49");
+			assertEquals(finalPrice2Double.toString(), String.valueOf(expected));
 			
 			
 			// recupero informazioni sul terzo articolo
 			receipt = helper.getReceiptInformations("CHOCOLATE BAR", 0.85, true, false);
-			String finalPrice3 = receipt.getFinalPrice();
+			Double finalPrice3Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
 			String percentageTotalTax3 = receipt.getPercentageTotalTax();
 			
+			expected = 0.85;
+			
 			// verifico prezzo finale
-			assertEquals(finalPrice3, "0,85");
+			assertEquals(finalPrice3Double.toString(), String.valueOf(expected));
 			
 			
 			// eseguo la sommatoria delle tasse per calcolare il totale
@@ -66,17 +69,19 @@ public class TestGetReceiptInformations {
 							    new Double(percentageTotalTax2.replace(CHAR_COMMA, CHAR_DOT)) + 
 							    new Double(percentageTotalTax3.replace(CHAR_COMMA, CHAR_DOT));
 			
+			expected = 1.50;
+			
 			// verifico ammontare totale delle tasse
-			assertEquals("1,50", String.format(FORMAT_STRING, salesTaxes));
+			assertEquals(String.valueOf(expected), (String.format(FORMAT_STRING, salesTaxes)).replace(CHAR_COMMA, CHAR_DOT));
 			
 			
 			// eseguo la sommatoria dei prezzi
-			Double total = new Double(finalPrice1.replace(CHAR_COMMA, CHAR_DOT)) + 
-				    	   new Double(finalPrice2.replace(CHAR_COMMA, CHAR_DOT)) + 
-				    	   new Double(finalPrice3.replace(CHAR_COMMA, CHAR_DOT));
+			Double total = finalPrice1Double + finalPrice2Double + finalPrice3Double;
+			
+			expected = 29.83;
 			
 			// verifico ammontare prezzo
-			assertEquals("29,83", String.format(FORMAT_STRING, total));
+			assertEquals(String.valueOf(expected), (String.format(FORMAT_STRING, total)).replace(CHAR_COMMA, CHAR_DOT));
 		
 		} catch (Exception e) {
 			System.out.println(e);
