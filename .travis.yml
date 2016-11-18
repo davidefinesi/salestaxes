@@ -1,2 +1,2 @@
 language: java
-install: sudo mvn clean install -DskipTests
+install: mvn clean install -DskipTests
