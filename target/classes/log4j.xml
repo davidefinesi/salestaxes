@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  Log4j Configuration                                                  -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!--
+   | For more configuration information and examples see the Jakarta Log4j
+   | owebsite: http://jakarta.apache.org/log4j
+ -->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<!-- Console Appender -->
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p - %c - %m%n"/>
+		</layout>
+	</appender>
+	
+	<!-- Rolling File Appender BUSINESS-->
+	<appender name="SALES_TAXES" class="org.apache.log4j.RollingFileAppender">
+		<param name="Threshold" value="DEBUG"/>
+		<param name="File" value="${catalina.home}/logs/sales_taxes.log"/>
+		<param name="MaxFileSize" value="2000kb"/>
+		<param name="MaxBackupIndex" value="5"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %p - %c - %m%n"/>
+		</layout>
+	</appender>
+
+	<logger name="it.alten.project" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="SALES_TAXES"/>
+	</logger>
+   
+   <!-- ======================= -->
+   <!-- Setup the Root category -->
+   <!-- ======================= -->
+
+   <root>
+		<level value="DEBUG"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="SALES_TAXES"/>
+	</root>
+   
+</log4j:configuration>

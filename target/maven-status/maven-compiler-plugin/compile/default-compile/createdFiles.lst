@@ -1,0 +1,8 @@
+it\alten\project\vo\ReceiptVO.class
+it\alten\project\vo\ItemListVO.class
+it\alten\project\bean\Item.class
+it\alten\project\utils\SalesTaxesHelper.class
+it\alten\project\utils\SalesTaxesUtility.class
+it\alten\project\utils\PurchaseItemsEnum.class
+it\alten\project\utils\Constants.class
+it\alten\project\jaxrs\SalesTaxesRestService.class

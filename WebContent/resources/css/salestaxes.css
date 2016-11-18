@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+.title {
+	color: white;
+	font-weight: bold;
+	font-size: xx-large;
+	text-align: center;
+}
+
+.paragraph{
+	color: white;
+	font-weight: normal;
+	font-size: large;
+	text-align: justify;
+}
+
+.selection{
+	margin-top: 50px;
+}
+
+.label{
+	color: white;
+	font-weight: bold;
+}
+
+.receiptStyle{
+	color: white;
+	margin-top: 20px;
+}
+
+.descriptionStyle{
+	color: white;
+	margin-top: 7px;
+	font-size: medium;
+}
+
+.bodyStyle{
+	background-color: #29088A;
+}
+
+.errorMessageStyle{
+	text-align: left;
+	color: red;
+	margin-top: -15px;
+}
