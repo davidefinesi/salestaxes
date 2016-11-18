@@ -57,6 +57,7 @@ public class SalesTaxesHelper {
 			logger.error("L'InputStream contiene una sequenza 'malformed' secondo Unicode");
 			throw new Exception("L'InputStream contiene una sequenza 'malformed' secondo Unicode", e1);
 		} catch (NullPointerException e) {
+			logger.error("File di properties non presente");
 			throw new Exception("File di properties non presente", e);
 		}
         
