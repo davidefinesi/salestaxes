@@ -22,32 +22,32 @@
 	</appender>
 	
 	<!-- Rolling File Appender BUSINESS-->
-	<appender name="SALES_TAXES" class="org.apache.log4j.RollingFileAppender">
-		<param name="Threshold" value="DEBUG"/>
-		<param name="File" value="${catalina.home}/logs/sales_taxes.log"/>
-		<param name="MaxFileSize" value="2000kb"/>
-		<param name="MaxBackupIndex" value="5"/>
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d - %p - %c - %m%n"/>
-		</layout>
-	</appender>
+<!-- 	<appender name="SALES_TAXES" class="org.apache.log4j.RollingFileAppender"> -->
+<!-- 		<param name="Threshold" value="DEBUG"/> -->
+<!-- 		<param name="File" value="${catalina.home}/logs/sales_taxes.log"/> -->
+<!-- 		<param name="MaxFileSize" value="2000kb"/> -->
+<!-- 		<param name="MaxBackupIndex" value="5"/> -->
+<!-- 		<layout class="org.apache.log4j.PatternLayout"> -->
+<!-- 			<param name="ConversionPattern" value="%d - %p - %c - %m%n"/> -->
+<!-- 		</layout> -->
+<!-- 	</appender> -->
 
 	<logger name="it.alten.project.bean" additivity="false">
 		<level value="DEBUG"/>
 		<appender-ref ref="ConsoleAppender"/>
-		<appender-ref ref="SALES_TAXES"/>
+<!-- 		<appender-ref ref="SALES_TAXES"/> -->
 	</logger>
 	
 	<logger name="it.alten.project.jaxrs" additivity="false">
 		<level value="DEBUG"/>
 		<appender-ref ref="ConsoleAppender"/>
-		<appender-ref ref="SALES_TAXES"/>
+<!-- 		<appender-ref ref="SALES_TAXES"/> -->
 	</logger>
 	
 	<logger name="it.alten.project.facade" additivity="false">
 		<level value="DEBUG"/>
 		<appender-ref ref="ConsoleAppender"/>
-		<appender-ref ref="SALES_TAXES"/>
+<!-- 		<appender-ref ref="SALES_TAXES"/> -->
 	</logger>
 	
 	<logger name="it.alten.project.utils" additivity="false">
