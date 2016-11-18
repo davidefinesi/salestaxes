@@ -20,7 +20,6 @@ import org.junit.Test;
  */
 public class TestGetReceiptInformations {
 	
-	private static Logger logger = Logger.getLogger(TestGetReceiptInformations.class);
 	private static String PROPERTY_FILE = "/salestaxes.properties";
 
 	
@@ -77,7 +76,7 @@ public class TestGetReceiptInformations {
 			assertEquals("29,83", String.format(FORMAT_STRING, total));
 		
 		} catch (Exception e) {
-			logger.error("ERRORE: " + e);
+			System.out.println(e);
 		}
 
 	}
@@ -125,7 +124,7 @@ public class TestGetReceiptInformations {
 			assertEquals("65,15", String.format(FORMAT_STRING, total));
 		
 		} catch (Exception e) {
-			logger.error("ERRORE: " + e);
+			System.out.println(e);
 		}
 	}
 	
@@ -194,7 +193,7 @@ public class TestGetReceiptInformations {
 			assertEquals("74,68", String.format(FORMAT_STRING, total));
 		
 		} catch (Exception e) {
-			logger.error("ERRORE: " + e);
+			System.out.println(e);
 		}
 	}
 

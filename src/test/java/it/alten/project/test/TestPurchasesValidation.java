@@ -18,7 +18,6 @@ import org.junit.Test;
  */
 public class TestPurchasesValidation {
 	
-	private static Logger logger = Logger.getLogger(TestPurchasesValidation.class);
 	private static String PROPERTY_FILE = "/salestaxes.properties";
 
 	
@@ -61,7 +60,7 @@ public class TestPurchasesValidation {
 			vo = helper.getItemListByPurchaseNumber("purchase1.items.test2");
 			assertEquals("Errore di traduzione dal codice 'P' nel nome dell'articolo per l'ordine PURCHASE1", vo.getErrorMessagesList().get(0)); 
 		} catch (Exception e) {
-			logger.error("ERRORE: " + e);
+			System.out.println(e);
 		}
 
 	}
