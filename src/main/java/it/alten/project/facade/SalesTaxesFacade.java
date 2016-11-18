@@ -14,6 +14,7 @@ import it.alten.project.vo.ItemListVO;
  */
 public class SalesTaxesFacade {
 	
+	private static String PROPERTY_FILE = "/salestaxes.properties";
 	private static SalesTaxesHelper helper;
 	
 	
@@ -23,16 +24,17 @@ public class SalesTaxesFacade {
 	public static String getPurchaseReceipt(String purchaseId){
 		
 		try {
-			helper = new SalesTaxesHelper();
+			helper = new SalesTaxesHelper(PROPERTY_FILE);
+		
+			// recupero la lista degli articoli
+			ItemListVO itemList1VO = helper.getItemListByPurchaseNumber("purchase" + purchaseId + ".items");
+			
+			// eseguo la stampa della ricevuta
+			return helper.getStringReceipt(itemList1VO.getItemList(), purchaseId);
+		
 		} catch (Exception e) {
 			return "ERRORE: " + e;
 		}
-		
-		// recupero la lista degli articoli
-		ItemListVO itemList1VO = helper.getItemListByPurchaseNumber("purchase" + purchaseId + ".items");
-		
-		// eseguo la stampa della ricevuta
-		return helper.getStringReceipt(itemList1VO.getItemList(), purchaseId);
 	}
 	
 	
@@ -42,21 +44,22 @@ public class SalesTaxesFacade {
 	public static String getCompletePurchaseReceipt(){
 		
 		try {
-			helper = new SalesTaxesHelper();
+			helper = new SalesTaxesHelper(PROPERTY_FILE);
+		
+			//  PURCHASE 1, PURCHASE 2, PURCHASE 3 
+			ItemListVO itemList1VO = helper.getItemListByPurchaseNumber("purchase1.items");
+			ItemListVO itemList2VO = helper.getItemListByPurchaseNumber("purchase2.items");
+			ItemListVO itemList3VO = helper.getItemListByPurchaseNumber("purchase3.items");
+			
+			String receipt1 = helper.getStringReceipt(itemList1VO.getItemList(), String.valueOf(1));
+			String receipt2 = helper.getStringReceipt(itemList2VO.getItemList(), String.valueOf(2));
+			String receipt3 = helper.getStringReceipt(itemList3VO.getItemList(), String.valueOf(3));
+			
+			return receipt1 + "<br/><br/>" + receipt2 + "<br/><br/>"+ receipt3;
+		
 		} catch (Exception e) {
 			return "ERRORE: " + e;
 		}
-		
-		//  PURCHASE 1, PURCHASE 2, PURCHASE 3 
-		ItemListVO itemList1VO = helper.getItemListByPurchaseNumber("purchase1.items");
-		ItemListVO itemList2VO = helper.getItemListByPurchaseNumber("purchase2.items");
-		ItemListVO itemList3VO = helper.getItemListByPurchaseNumber("purchase3.items");
-		
-		String receipt1 = helper.getStringReceipt(itemList1VO.getItemList(), String.valueOf(1));
-		String receipt2 = helper.getStringReceipt(itemList2VO.getItemList(), String.valueOf(2));
-		String receipt3 = helper.getStringReceipt(itemList3VO.getItemList(), String.valueOf(3));
-		
-		return receipt1 + "<br/><br/>" + receipt2 + "<br/><br/>"+ receipt3;
 	}
 	
 	
@@ -66,25 +69,26 @@ public class SalesTaxesFacade {
 	public static String getPurchasesDescription(){
 		
 		try {
-			helper = new SalesTaxesHelper();
+			helper = new SalesTaxesHelper(PROPERTY_FILE);
+		
+			//  PURCHASE 1, PURCHASE 2, PURCHASE 3 
+			ItemListVO itemList1VO = helper.getItemListByPurchaseNumber("purchase1.items");
+			ItemListVO itemList2VO = helper.getItemListByPurchaseNumber("purchase2.items");
+			ItemListVO itemList3VO = helper.getItemListByPurchaseNumber("purchase3.items");
+			
+			String receipt1 = helper.getPurchaseDescription(itemList1VO.getItemList(), String.valueOf(1));
+			String receipt2 = helper.getPurchaseDescription(itemList2VO.getItemList(), String.valueOf(2));
+			String receipt3 = helper.getPurchaseDescription(itemList3VO.getItemList(), String.valueOf(3));
+			
+			String errorMessagesSring = SalesTaxesUtility.getErrorMessagesString(itemList1VO.getErrorMessagesList());
+			errorMessagesSring = errorMessagesSring + SalesTaxesUtility.getErrorMessagesString(itemList2VO.getErrorMessagesList());
+			errorMessagesSring = errorMessagesSring + SalesTaxesUtility.getErrorMessagesString(itemList3VO.getErrorMessagesList());
+			
+			return errorMessagesSring + receipt1 + receipt2 + receipt3;
+		
 		} catch (Exception e) {
 			return "ERRORE: " + e;
 		}
-		
-		//  PURCHASE 1, PURCHASE 2, PURCHASE 3 
-		ItemListVO itemList1VO = helper.getItemListByPurchaseNumber("purchase1.items");
-		ItemListVO itemList2VO = helper.getItemListByPurchaseNumber("purchase2.items");
-		ItemListVO itemList3VO = helper.getItemListByPurchaseNumber("purchase3.items");
-		
-		String receipt1 = helper.getPurchaseDescription(itemList1VO.getItemList(), String.valueOf(1));
-		String receipt2 = helper.getPurchaseDescription(itemList2VO.getItemList(), String.valueOf(2));
-		String receipt3 = helper.getPurchaseDescription(itemList3VO.getItemList(), String.valueOf(3));
-		
-		String errorMessagesSring = SalesTaxesUtility.getErrorMessagesString(itemList1VO.getErrorMessagesList());
-		errorMessagesSring = errorMessagesSring + SalesTaxesUtility.getErrorMessagesString(itemList2VO.getErrorMessagesList());
-		errorMessagesSring = errorMessagesSring + SalesTaxesUtility.getErrorMessagesString(itemList3VO.getErrorMessagesList());
-		
-		return errorMessagesSring + receipt1 + receipt2 + receipt3;
 	}
 
 }

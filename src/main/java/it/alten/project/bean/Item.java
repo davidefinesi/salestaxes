@@ -3,13 +3,8 @@ package it.alten.project.bean;
 import static it.alten.project.utils.Constants.CHAR_COMMA;
 import static it.alten.project.utils.Constants.CHAR_DOT;
 import static it.alten.project.utils.Constants.FORMAT_STRING;
-import it.alten.project.jaxrs.SalesTaxesRestService;
-import it.alten.project.utils.SalesTaxesHelper;
+import it.alten.project.utils.TaxCalculator;
 import it.alten.project.vo.ReceiptVO;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -43,8 +38,8 @@ public class Item {
 		this.price = validateAndFormatPrice(purchaseName, priceFromProperties);
 		 
 		// recupero e setto informazioni sul prezzo finale e sull'ammontare delle tasse applicate
-		SalesTaxesHelper helper = new SalesTaxesHelper();
-		ReceiptVO vo = helper.getReceiptInformations(this.itemName, new Double(price).doubleValue(), isExempt, isImported);
+		TaxCalculator calculator = new TaxCalculator(this.itemName);
+		ReceiptVO vo = calculator.getReceiptInformations(new Double(price).doubleValue(), isExempt, isImported);
 		
 		this.finalPrice = vo.getFinalPrice();
 		this.percentageTotalTax = vo.getPercentageTotalTax(); 

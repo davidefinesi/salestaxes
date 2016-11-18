@@ -32,22 +32,21 @@ public class SalesTaxesHelper {
 	
 	private static Logger logger = Logger.getLogger(SalesTaxesHelper.class);
 	private Properties prop;
-	private String PROPERTY_FILE = "/salestaxes.properties";
 
 	
-	public SalesTaxesHelper() throws Exception{
+	public SalesTaxesHelper(String propertyFile) throws Exception{
 		// carico informazioni dal file di properties
-		prop = loadProperties();
+		prop = loadProperties(propertyFile);
 	}
 	
 	/*
 	 * Metodo che effettua il caricamento del file di properties
 	 */
-	private Properties loadProperties() throws Exception{
+	private Properties loadProperties(String propertyFile) throws Exception{
         
 		Properties prop = new Properties();
 		InputStream in = null;
-		in = SalesTaxesUtility.class.getResourceAsStream(PROPERTY_FILE);
+		in = SalesTaxesUtility.class.getResourceAsStream(propertyFile);
         try {
 			prop.load(in);
 			in.close();
@@ -57,6 +56,8 @@ public class SalesTaxesHelper {
 		} catch (IllegalArgumentException e1){
 			logger.error("L'InputStream contiene una sequenza 'malformed' secondo Unicode");
 			throw new Exception("L'InputStream contiene una sequenza 'malformed' secondo Unicode", e1);
+		} catch (NullPointerException e) {
+			throw new Exception("File di properties non presente", e);
 		}
         
         return prop;

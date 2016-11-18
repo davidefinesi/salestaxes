@@ -19,12 +19,11 @@ import org.junit.Test;
 public class TestPurchasesValidation {
 	
 	private static Logger logger = Logger.getLogger(TestPurchasesValidation.class);
+	private static String PROPERTY_FILE = "/salestaxes.properties";
 
 	
 	@Test
 	public void testPriceValidation() {
-		
-		logger.info("TEST:: PriceValidationPurchase1...");
 		
 		try {
 			new Item("PURCHASE1", "book", "12.s9", true, false);
@@ -51,21 +50,19 @@ public class TestPurchasesValidation {
 	@Test
 	public void testItemCodeValidation() {
 		
-		logger.info("TEST:: ItemCodeValidation...");
-		
 		// istanzio la classe helper
 		SalesTaxesHelper helper = null;
 		try {
-			helper = new SalesTaxesHelper();
+			helper = new SalesTaxesHelper(PROPERTY_FILE);
+		
+			ItemListVO vo = helper.getItemListByPurchaseNumber("purchase1.items.test1");
+			assertEquals("Errore di traduzione dal codice 'PUA' nel nome dell'articolo per l'ordine PURCHASE1", vo.getErrorMessagesList().get(0)); 
+			
+			vo = helper.getItemListByPurchaseNumber("purchase1.items.test2");
+			assertEquals("Errore di traduzione dal codice 'P' nel nome dell'articolo per l'ordine PURCHASE1", vo.getErrorMessagesList().get(0)); 
 		} catch (Exception e) {
 			logger.error("ERRORE: " + e);
 		}
-		
-		ItemListVO vo = helper.getItemListByPurchaseNumber("purchase1.items.test1");
-		assertEquals("Errore di traduzione dal codice 'PUA' nel nome dell'articolo per l'ordine PURCHASE1", vo.getErrorMessagesList().get(0)); 
-		
-		vo = helper.getItemListByPurchaseNumber("purchase1.items.test2");
-		assertEquals("Errore di traduzione dal codice 'P' nel nome dell'articolo per l'ordine PURCHASE1", vo.getErrorMessagesList().get(0)); 
 
 	}
 

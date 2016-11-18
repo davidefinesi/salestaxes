@@ -32,20 +32,43 @@
 		</layout>
 	</appender>
 
-	<logger name="it.alten.project" additivity="false">
+	<logger name="it.alten.project.bean" additivity="false">
 		<level value="DEBUG"/>
 		<appender-ref ref="ConsoleAppender"/>
 		<appender-ref ref="SALES_TAXES"/>
+	</logger>
+	
+	<logger name="it.alten.project.jaxrs" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="SALES_TAXES"/>
+	</logger>
+	
+	<logger name="it.alten.project.facade" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="SALES_TAXES"/>
+	</logger>
+	
+	<logger name="it.alten.project.utils" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="SALES_TAXES"/>
+	</logger>
+	
+	<logger name="it.alten.project.test" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="ConsoleAppender"/>
 	</logger>
    
    <!-- ======================= -->
    <!-- Setup the Root category -->
    <!-- ======================= -->
 
-   <root>
-		<level value="DEBUG"/>
-		<appender-ref ref="ConsoleAppender"/>
-		<appender-ref ref="SALES_TAXES"/>
-	</root>
+<!--    <root> -->
+<!-- 		<level value="DEBUG"/> -->
+<!-- 		<appender-ref ref="ConsoleAppender"/> -->
+<!-- 		<appender-ref ref="SALES_TAXES"/> -->
+<!-- 	</root> -->
    
 </log4j:configuration>

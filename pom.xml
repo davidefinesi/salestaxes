@@ -12,7 +12,7 @@
         <jersey.version>1.18.3</jersey.version>
   </properties>
   
-  <dependencies> 
+  <dependencies>   
 	<dependency>
 	    <groupId>jstl</groupId>
 	    <artifactId>jstl</artifactId>
