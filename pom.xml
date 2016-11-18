@@ -4,7 +4,7 @@
   <artifactId>salestaxes</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  
+   
   <name>salestaxes Maven Webapp</name>
   <url>http://maven.apache.org</url>
   
