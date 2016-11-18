@@ -100,36 +100,43 @@ public class TestGetReceiptInformations {
 		
 			// recupero informazioni sul primo articolo
 			ReceiptVO receipt = helper.getReceiptInformations("IMPORTED BOX OF CHOCOLATES", 10.00, true, true);
-			String finalPrice1 = receipt.getFinalPrice();
+			Double finalPrice1Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
 			String percentageTotalTax1 = receipt.getPercentageTotalTax();
 			
+			double expected = 10.50;
+			
 			// verifico prezzo finale
-			assertEquals(finalPrice1, "10,50");
+			assertEquals(finalPrice1Double.toString(), String.valueOf(expected));
 			
 			
 			// recupero informazioni sul secondo articolo
 			receipt = helper.getReceiptInformations("IMPORTED BOTTLE OF PERFUME", 47.50, false, true);
-			String finalPrice2 = receipt.getFinalPrice();
+			Double finalPrice2Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
 			String percentageTotalTax2 = receipt.getPercentageTotalTax();
 			
+			expected = 54.65;
+			
 			// verifico prezzo finale
-			assertEquals(finalPrice2, "54,65");
+			assertEquals(finalPrice2Double.toString(), String.valueOf(expected));
 			
 			
 			// eseguo la sommatoria delle tasse per calcolare il totale
 			Double salesTaxes = new Double(percentageTotalTax1.replace(CHAR_COMMA, CHAR_DOT)) + 
 							    new Double(percentageTotalTax2.replace(CHAR_COMMA, CHAR_DOT));
 			
+			expected = 7.65;
+			
 			// verifico ammontare totale delle tasse
-			assertEquals("7,65", String.format(FORMAT_STRING, salesTaxes));
+			assertEquals(String.valueOf(expected), (String.format(FORMAT_STRING, salesTaxes).replace(CHAR_COMMA, CHAR_DOT)));
 			
 			
 			// eseguo la sommatoria dei prezzi
-			Double total = new Double(finalPrice1.replace(CHAR_COMMA, CHAR_DOT)) + 
-				    	   new Double(finalPrice2.replace(CHAR_COMMA, CHAR_DOT));
+			Double total = finalPrice1Double + finalPrice2Double;
+			
+			expected = 65.15;
 			
 			// verifico ammontare prezzo
-			assertEquals("65,15", String.format(FORMAT_STRING, total));
+			assertEquals(String.valueOf(expected), (String.format(FORMAT_STRING, total)).replace(CHAR_COMMA, CHAR_DOT));
 		
 		} catch (Exception e) {
 			System.out.println(e);
