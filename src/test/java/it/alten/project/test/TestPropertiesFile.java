@@ -8,8 +8,7 @@ import org.junit.Test;
 
 
 /**
- * Classe di Test che si occupa di verificare l'esattezza dei processi di validazione
- * sia dei codici degli articoli che dei prezzi così come sono configurati
+ * Test class that checks the validation of the properties file
  * 
  * @author Prisma
  *

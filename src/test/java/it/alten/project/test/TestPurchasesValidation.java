@@ -9,8 +9,7 @@ import org.junit.Test;
 
 
 /**
- * Classe di Test che si occupa di verificare l'esattezza dei processi di validazione
- * sia dei codici degli articoli che dei prezzi così come sono configurati
+ * Test class that checks the validation processes, both of item codes and of prices
  * 
  * @author Prisma
  *
@@ -48,7 +47,7 @@ public class TestPurchasesValidation {
 	@Test
 	public void testItemCodeValidation() {
 		
-		// istanzio la classe helper
+		// create helper class
 		SalesTaxesHelper helper = null;
 		try {
 			helper = new SalesTaxesHelper(PROPERTY_FILE);
