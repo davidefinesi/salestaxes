@@ -1,39 +1,21 @@
 
+# salestaxes
 
 ## Requires
-Requires jdk 1.7 
+jdk 1.7, Apache Maven 3.3.9
 
 ## Installation
 Deployed on Apache Tomcat 8.0.38
 
-## Usage with Storyboard
-In Identity Inspector, connect the UIView to SpringView Class and set the animation properties in Attribute Inspector.
-
-![](http://cl.ly/image/241o0G1G3S36/download/springsetup.jpg)
-
 ## Usage with Code
     layer.animation = "squeezeDown"
     layer.animate()
-
-## Chaining Animations
-    layer.y = -50
-    animateToNext {
-      layer.animation = "fall"
-      layer.animateTo()
-    }
-
+    
 ## Functions
     animate()
     animateNext { ... }
     animateTo()
     animateToNext { ... }
-
-## Curve
-    spring
-    linear
-    easeIn
-    easeOut
-    easeInOut
 
 ## Properties
     force
@@ -49,23 +31,9 @@ In Identity Inspector, connect the UIView to SpringView Class and set the animat
 
 \* Not all properties work together. Play with the demo app.
 
-
-## Autostart
-Allows you to animate without code. Don't need to use this if you plan to start the animation in code.
-
-## Autohide
-Saves you the hassle of adding a line "layer.alpha = 0" in viewDidLoad().
-
-## Known issue
-Animations won't autostart when view is reached via performSegueWithIdentifier.
-
 ## Tutorials
 - Tutorials available on [Design+Code](https://designcode.io/swiftapp).
 - [Integrate Spring to existing Objective-C projects](https://medium.com/ios-apprentice/using-swift-in-objective-c-projects-f7e7a09f8be)
 
 ## ChangeLog
 - At [ChangeLog](https://github.com/MengTo/Spring/wiki/CHANGELOG) wiki page
-
-## License
-
-Spring is released under the MIT license. See LICENSE for details.
