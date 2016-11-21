@@ -17,15 +17,17 @@ Deployed on Apache Tomcat 8.0.38
     animateToNext { ... }
 
 ## Properties
-    force
-    duration
-    delay
-    damping
-    velocity
-    repeatCount
-    scale
-    x
-    y
-    rotate
+PURCHASE ITEM NAMES<br/>
+purchase.book<br/>
+purchase.chocolatebar<br/>
+purchase.musicCD<br/>
+purchase.imported.bottle.of.perfume<br/>
+purchase.imported.box.of.chocolate<br/>
+purchase.bottle.of.perfume<br/>
+purchase.headache.pills<br/>
 
-\* Not all properties work together. Play with the demo app.
+PURCHASES DEFINITION (item code - price "##.00")<br/>
+purchase1.items<br/>
+purchase2.items<br/>
+purchase3.items<br/>
+
