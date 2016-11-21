@@ -1,6 +1,7 @@
 
 # salestaxes
 Simple web application that handle purchases of items. It accept a list of items in input, with their price, and print a receipt which lists the name of all the items and their final prices (including tax), finishing with the total cost of the items, and the total amounts of sales taxes paid. 
+It is possible to execute the purchase1, the purchase2, the purchase3 or the 'complete purchase' that meanse all the purchases togheter.
 - Basic sales tax: applicable at a rate of 10% on all goods, except books, food, and medical products that are exempt. 
 - Import duty: applicable on all imported goods at a rate of 5%, with no exemptions.
 
@@ -10,11 +11,12 @@ jdk 1.7, Apache Maven 3.3.9
 ## Installation
 Deployed on Apache Tomcat 8.0.38
     
-## Functions
-    animate()
-    animateNext { ... }
-    animateTo()
-    animateToNext { ... }
+## RESTful Web Services
+Salestaxes web application use the RESTful web service technology to handle the purchases. There is a 'SalesTaxesRestService' that returns the receipts of the purchase, so is possible to get these both the web app page by the invocation url of the services, only passing the purchaseId:<br/>
+purchase1 --> /salestaxes/rest/salestaxesservice/purchases/1<br/>
+purchase2 --> /salestaxes/rest/salestaxesservice/purchases/2<br/>
+purchase3 --> /salestaxes/rest/salestaxesservice/purchases/3<br/>
+complete purchase --> /salestaxes/rest/salestaxesservice/purchases/-1
 
 ## Properties
 PURCHASE ITEM NAMES<br/>
