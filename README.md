@@ -4,13 +4,7 @@
 Requires jdk 1.7 
 
 ## Installation
-Drop in the Spring folder to your Xcode project (make sure to enable "Copy items if needed" and "Create groups").
-
-Or via CocoaPods:
-```
-use_frameworks!
-pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
-```
+Deployed on Apache Tomcat 8.0.38
 
 ## Usage with Storyboard
 In Identity Inspector, connect the UIView to SpringView Class and set the animation properties in Attribute Inspector.
