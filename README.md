@@ -15,9 +15,6 @@ In Identity Inspector, connect the UIView to SpringView Class and set the animat
     layer.animation = "squeezeDown"
     layer.animate()
 
-## Demo The Animations
-![](http://cl.ly/image/1n1E2j3W3y24/springscreen.jpg)
-
 ## Chaining Animations
     layer.y = -50
     animateToNext {
@@ -30,34 +27,6 @@ In Identity Inspector, connect the UIView to SpringView Class and set the animat
     animateNext { ... }
     animateTo()
     animateToNext { ... }
-
-## Animation
-    shake
-    pop
-    morph
-    squeeze
-    wobble
-    swing
-    flipX
-    flipY
-    fall
-    squeezeLeft
-    squeezeRight
-    squeezeDown
-    squeezeUp
-    slideLeft
-    slideRight
-    slideDown
-    slideUp
-    fadeIn
-    fadeOut
-    fadeInLeft
-    fadeInRight
-    fadeInDown
-    fadeInUp
-    zoomIn
-    zoomOut
-    flash
 
 ## Curve
     spring
