@@ -1,6 +1,6 @@
 
 # salestaxes
-Simple web application that handle purchases of items. It accept a list of items in input, with their price, and print a receipt which lists the name of all the items and their final prices (including tax), finishing with the total cost of the items, and the total amounts of sales taxes paid. 
+Simple web application that handles purchases of items. It accept a list of items in input, with their price, and print a receipt which lists the name of all the items and their final prices (including taxes), finishing with the total cost of the items, and the total amounts of sales taxes paid. 
 It is possible to execute the purchase1, the purchase2, the purchase3 or the 'complete purchase' that means all the purchases togheter.
 - Basic sales tax: applicable at a rate of 10% on all goods, except books, food, and medical products that are exempt. 
 - Import duty: applicable on all imported goods at a rate of 5%, with no exemptions.
