@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Classe WebService di tipo REST che si occupa di gestire gli acquisti
+ * RESTful webservice that handle purchases
  * 
  * @author Prisma
  *
@@ -34,7 +34,7 @@ public class SalesTaxesRestService {
 		
 		logger.info("Purchases description...");
 		
-		// attraverso il facade recupero la stringa (HTML) della descrizione degli ordini effettuabili
+		// by facade class getting the html string that contains the description of the purchases available
 		return SalesTaxesFacade.getPurchasesDescription();
 	}
 	
@@ -46,18 +46,18 @@ public class SalesTaxesRestService {
 		
 		String receipt = EMPTY_STRING;
 		
-		// se il purchaseId è diverso da "-1" alla sto effettuando un ordine specifico altrimenti eseguo tutti e tre gli ordini
+		// if the purchaseId is not equal to "-1" I'm doing a specified purchase, otherwise I do the complete purchase
 		if (!COMPLETE_PURCHASE_ID.equals(purchaseId)) {
 			
-			logger.info("Effettuato acquisto " + purchaseId + "...");
+			logger.info("Purchase made " + purchaseId + "...");
 			
-			// attraverso il facade recupero la stringa (HTML) della ricevuta dell'ordine effettuato
+			// from facade class I get the receipt string (HTML) of the purchase 
 			receipt = SalesTaxesFacade.getPurchaseReceipt(purchaseId);
 		} else {
 			
-			logger.info("Effettuato acquisto completo...");
+			logger.info("Complete purchase...");
 			
-			// attraverso il facade recupero la stringa (HTML) della ricevuta dell'ordine completo effettuato
+			// from facade class I get the receipt string (HTML) of the complete purchase
 			receipt = SalesTaxesFacade.getCompletePurchaseReceipt();
 		}
 		

@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Classe Calcolatore che si occupa del calcolo delle tasse effettivamente applicate
+ * Calculator class that provide the exact amount of the applicated taxes
  * 
  * @author Prisma
  *
@@ -28,45 +28,45 @@ public class TaxCalculator {
 	private String itemName;
 	
 	
-	public TaxCalculator(String itemName) throws Exception{
+	public TaxCalculator(String itemName) {
 		this.itemName = itemName;
 	}
 	
 	
 	/*
-	 * Metodo che restituisce il prezzo finale e l'ammontare totale delle tasse sul prodotto, al netto della regola sull'arrotondamento
+	 * Method that returns the final price and the total amount of taxes on the item, in order to the rounding up rule
 	 */
 	public ReceiptVO getReceiptInformations(double priceDouble, boolean isExempt, boolean isImported){
 		
-		logger.debug("Calcolo della ricevuta per l'articolo " + itemName + " con un prezzo pari a " + String.format(FORMAT_STRING, priceDouble));
+		logger.debug("Calculation of the receipt for the item " + itemName + " with the price " + String.format(FORMAT_STRING, priceDouble));
 		
 		finalPriceDouble = priceDouble;
 		
-		// se il prodotto non è tra quelli esenti si applica la basic sales tax (10%) ed eseguo l'arrotondamento in su dello 0.05
+		// if the item is not exempt apply the basic tax (10%) and doing the rounding up to 0.05 
 		if (!isExempt) {
 			Double percentageBasicTax = Double.valueOf(priceDouble * 10 / 100);
 			percentageBasicTaxRounded = SalesTaxesUtility.round(new BigDecimal(percentageBasicTax), new BigDecimal(ROUNDING_INCREMENT), RoundingMode.UP);
-			logger.debug("L'articolo " + itemName + " non è tra quelli esenti dalla Basic sales tax (10%)");
+			logger.debug("The item " + itemName + " is not exempt from the Basic sales tax (10%)");
 		}
 		
-		// se il prodotto è importato si applica la tassa di importazione (5%) ed eseguo l'arrotondamento in su dello 0.05
+		// if the item is imported apply the import duty (5%) and doing the rounding up to 0.05
 		if (isImported) {
 			Double percentageDutyTax = Double.valueOf(priceDouble * 5 / 100);
 			percentageDutyTaxRounded = SalesTaxesUtility.round(new BigDecimal(percentageDutyTax), new BigDecimal(ROUNDING_INCREMENT), RoundingMode.UP);
-			logger.debug("L'articolo " + itemName + " è di importazione percui soggetto alla Import duty (5%)");
+			logger.debug("The item " + itemName + " is imported so the import duty is applicable (5%)");
 		}
 		
-		// effettuo la somma delle tasse presenti
+		// doing the sum of the taxes
 		percentageTotalTax = percentageBasicTaxRounded.add(percentageDutyTaxRounded);
 		String percentageTotalTaxString = String.format(FORMAT_STRING, percentageTotalTax);
-		logger.debug("Ammontare di tasse totali applicato all'articolo " + itemName + ": " + percentageTotalTaxString);
+		logger.debug("The total amount of taxes for the item " + itemName + ": " + percentageTotalTaxString);
 		
-		// stabilisco il prezzo finale sommando il valore del prezzo iniziale e l'ammontare totale delle tasse precedentemente calcolato
+		// defining the final price doing the sum between the initial price and the total amount of taxes
 		finalPriceDouble = Double.valueOf(priceDouble + percentageTotalTax.doubleValue());
 		String finalPriceDoubleString = String.format(FORMAT_STRING, finalPriceDouble);
-		logger.debug("Prezzo finale per l'articolo " + itemName + " al netto delle tasse: " + finalPriceDoubleString);
+		logger.debug("The final price for the item " + itemName + ": " + finalPriceDoubleString);
 		
-		// restituisco un oggetto che contiene queste due informazioni
+		// returning an object that wraps the two informations
 		receipt.setFinalPrice(finalPriceDoubleString);
 		receipt.setPercentageTotalTax(percentageTotalTaxString);
 		

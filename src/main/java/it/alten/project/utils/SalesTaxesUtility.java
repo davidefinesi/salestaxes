@@ -4,17 +4,12 @@ import static it.alten.project.utils.Constants.CHAR_COMMA;
 import static it.alten.project.utils.Constants.CHAR_DOT;
 import static it.alten.project.utils.Constants.EMPTY_STRING;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Properties;
-
-import org.apache.log4j.Logger;
 
 /**
- * Classe di utilità
+ * Utility class
  * 
  * @author Prisma
  *
@@ -22,7 +17,7 @@ import org.apache.log4j.Logger;
 public class SalesTaxesUtility {
 	
 	/*
-	 * Metodo che effettua l'arrotondamento per eccesso dell'importo in base all'incremento stabilito 
+	 * Method that provide the rounding up of the price by the defined increment 
 	 */
 	public static BigDecimal round(BigDecimal value, BigDecimal increment, RoundingMode roundingMode) {
 		if (increment.signum() == 0) {
@@ -36,6 +31,7 @@ public class SalesTaxesUtility {
 	
 	/*
 	 * Metodo di utilità che a partire da un prezzo in formato String (##,00) restituisce un Double
+	 * Method that from a string price (##,00) returns a Double
 	 */
 	public static double getPriceDoubleValue(String price){
 		return new Double(price.replace(CHAR_COMMA, CHAR_DOT)).doubleValue();
@@ -43,7 +39,7 @@ public class SalesTaxesUtility {
 	
 	
 	/*
-	 * Metodo di utilità che controlla che una stringa sia contemporaneamente non null e non vuota
+	 * Method that checks if a string is not null and not empty
 	 */
 	public static boolean isNotNullAndEmptyString(String value){
 		if (value != null && !EMPTY_STRING.equals(value)) {
@@ -54,7 +50,7 @@ public class SalesTaxesUtility {
 	
 	
 	/*
-	 * Metodo che a partire dalla lista dei messaggi di errore restituisce la relativa stringa html
+	 * Method that from an error message list returns the relative html string 
 	 */
 	public static String getErrorMessagesString(List<String> errorMessagesList){
 		String receipt = EMPTY_STRING;

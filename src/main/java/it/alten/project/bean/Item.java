@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Classe che rappresenta la struttura dati con la quale gestisco gli articoli dei vari ordini
+ * Class that defines data structure of the purchase's items 
  * 
  * @author Prisma
  *
@@ -34,10 +34,10 @@ public class Item {
 		this.isExempt = isExempt;
 		this.isImported = isImported;
 		
-		// leggo il prezzo dal file di properties e ne faccio una validazione di formato
+		// read the price from the properties file and do a format validate
 		this.price = validateAndFormatPrice(purchaseName, priceFromProperties);
 		 
-		// recupero e setto informazioni sul prezzo finale e sull'ammontare delle tasse applicate
+		// get information about the final price and the amount of taxes
 		TaxCalculator calculator = new TaxCalculator(this.itemName);
 		ReceiptVO vo = calculator.getReceiptInformations(new Double(price).doubleValue(), isExempt, isImported);
 		
@@ -98,21 +98,21 @@ public class Item {
 	
 	
 	/*
-	 * Metodo privato che legge dal file Properites il prezzo e lo restituisce in un formato idoneo
+	 * Method that reads from the properties file the price and return it in a right format
 	 */
 	private String validateAndFormatPrice(String purchaseName, String price) throws Exception{
 		
-		// mi assicuro che sia in un formato valido
+		// check if it is a valid format
 		try {
 			Double.parseDouble(price);
 			
-			// eseguo un arrotondamento e restituisco
+			// do the rounding and return
 			String stringPrice = String.format(FORMAT_STRING, new Double(price));
 			return stringPrice.replace(CHAR_COMMA, CHAR_DOT);
 			
 		} catch (NumberFormatException e) {
-			logger.error("Errore nel prezzo di partenza '" + price + "' dell'articolo '" + itemName.toUpperCase() + "' dell'ordine " + purchaseName + ": formato errato");
-			throw new Exception("Errore nel prezzo di partenza '" + price + "' dell'articolo '" + itemName.toUpperCase() + "' dell'ordine " + purchaseName + ": formato errato", e);
+			logger.error("Error in the starting price '" + price + "' of the item '" + itemName.toUpperCase() + "' in the purchase " + purchaseName + ": wrong format");
+			throw new Exception("Error in the starting price '" + price + "' of the item '" + itemName.toUpperCase() + "' in the purchase " + purchaseName + ": wrong format", e);
 		}
 	}
 		

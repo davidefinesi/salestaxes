@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Classe Helper che fornisce dei servizi strettamente legati all'operazione di ordinazione
+ * Helper class that provide the services tightly bound to the purchase operation
  * 
  * @author Prisma
  *
@@ -35,12 +35,13 @@ public class SalesTaxesHelper {
 
 	
 	public SalesTaxesHelper(String propertyFile) throws Exception{
-		// carico informazioni dal file di properties
+		// charge informations from properties file
 		prop = loadProperties(propertyFile);
 	}
 	
+
 	/*
-	 * Metodo che effettua il caricamento del file di properties
+	 * Method that charge the properties file
 	 */
 	private Properties loadProperties(String propertyFile) throws Exception{
         
@@ -51,65 +52,23 @@ public class SalesTaxesHelper {
 			prop.load(in);
 			in.close();
 		} catch (IOException e) {
-			logger.error("Errore durante la lettura/scrittura dall'InputStream");
-			throw new Exception("Errore durante la lettura/scrittura dall'InputStream", e);
+			logger.error("Error occurred when reading from the input stream");
+			throw new Exception("Error occurred when reading from the input stream", e);
 		} catch (IllegalArgumentException e1){
-			logger.error("L'InputStream contiene una sequenza 'malformed' secondo Unicode");
-			throw new Exception("L'InputStream contiene una sequenza 'malformed' secondo Unicode", e1);
+			logger.error("Input stream contains a malformed Unicode escape sequence");
+			throw new Exception("Input stream contains a malformed Unicode escape sequence", e1);
 		} catch (NullPointerException e) {
-			logger.error("File di properties non presente");
-			throw new Exception("File di properties non presente", e);
+			logger.error("Properties file not present");
+			throw new Exception("Properties file not present", e);
 		}
         
         return prop;
 	}
 	
-	/*
-	 * Metodo che restituisce il prezzo finale e l'ammontare totale delle tasse sul prodotto, al netto della regola sull'arrotondamento
-	 */
-	public ReceiptVO getReceiptInformations(String itemName, double priceDouble, boolean isExempt, boolean isImported){
-		
-		logger.debug("Calcolo della ricevuta per l'articolo " + itemName + " con un prezzo pari a " + String.format(FORMAT_STRING, priceDouble));
-		Double finalPriceDouble = priceDouble;
-		BigDecimal percentageBasicTaxRounded = new BigDecimal(0.0);
-		BigDecimal percentageDutyTaxRounded = new BigDecimal(0.0);
-		BigDecimal percentageTotalTax = new BigDecimal(0.0);
-		
-		// se il prodotto non è tra quelli esenti si applica la basic sales tax (10%) ed eseguo l'arrotondamento in su dello 0.05
-		if (!isExempt) {
-			Double percentageBasicTax = Double.valueOf(priceDouble * 10 / 100);
-			percentageBasicTaxRounded = SalesTaxesUtility.round(new BigDecimal(percentageBasicTax), new BigDecimal(ROUNDING_INCREMENT), RoundingMode.UP);
-			logger.debug("L'articolo " + itemName + " non è tra quelli esenti dalla Basic sales tax (10%)");
-		}
-		
-		// se il prodotto è importato si applica la tassa di importazione (5%) ed eseguo l'arrotondamento in su dello 0.05
-		if (isImported) {
-			Double percentageDutyTax = Double.valueOf(priceDouble * 5 / 100);
-			percentageDutyTaxRounded = SalesTaxesUtility.round(new BigDecimal(percentageDutyTax), new BigDecimal(ROUNDING_INCREMENT), RoundingMode.UP);
-			logger.debug("L'articolo " + itemName + " è di importazione percui soggetto alla Import duty (5%)");
-		}
-		
-		// effettuo la somma delle tasse presenti
-		percentageTotalTax = percentageBasicTaxRounded.add(percentageDutyTaxRounded);
-		String percentageTotalTaxString = String.format(FORMAT_STRING, percentageTotalTax);
-		logger.debug("Ammontare di tasse totali applicato all'articolo " + itemName + ": " + percentageTotalTaxString);
-		
-		// stabilisco il prezzo finale sommando il valore del prezzo iniziale e l'ammontare totale delle tasse precedentemente calcolato
-		finalPriceDouble = Double.valueOf(priceDouble + percentageTotalTax.doubleValue());
-		String finalPriceDoubleString = String.format(FORMAT_STRING, finalPriceDouble);
-		logger.debug("Prezzo finale per l'articolo " + itemName + " al netto delle tasse: " + finalPriceDoubleString);
-		
-		// restituisco un oggetto che contiene queste due informazioni
-		ReceiptVO receipt = new ReceiptVO();
-		receipt.setFinalPrice(finalPriceDoubleString);
-		receipt.setPercentageTotalTax(percentageTotalTaxString);
-		
-		return receipt;
-	}
 	
 
 	/*
-	 * Metodo che si occupa di stampare a video la ricevuta dell'ordine
+	 * Method that print the receipt of the purchase
 	 */
 	public String getStringReceipt(List<Item> itemList, String purchaseNumber){
 		
@@ -119,7 +78,7 @@ public class SalesTaxesHelper {
 		String receipt = EMPTY_STRING;
 		receipt = "<strong>Input " + purchaseNumber + ":</strong><br/>";
 		
-		// eseguo la stampa di tutti gli articoli coi relativi prezzi di partenza  
+		// print of all the items with their initial prices
 		for (int i = 0; i < itemList.size(); i++) { 
 			Item item = itemList.get(i);
 			receipt = receipt + "1 " + item.getItemName() + " at " + item.getPrice();
@@ -127,19 +86,19 @@ public class SalesTaxesHelper {
 				receipt = receipt + " / "; 
 			}
 			  
-			// calcolo i totali di prezzi e tasse applicate effettivamente
+			// calculate the total of the prices and the total of the taxes
 			totalPrices = Double.valueOf(totalPrices.doubleValue() +  SalesTaxesUtility.getPriceDoubleValue(item.getFinalPrice()));
 			totalTaxes = Double.valueOf(totalTaxes.doubleValue() +  SalesTaxesUtility.getPriceDoubleValue(item.getPercentageTotalTax()));
 		}
 		
-		// effettuo l'arrotondamento
+		// do the rounding up
 		String totalTaxesRounded = String.format(FORMAT_STRING, totalTaxes);
 		String totalPriceRounded = String.format(FORMAT_STRING, totalPrices);
 		
 		logger.debug("Sales Taxes: " + totalTaxesRounded);
 		logger.debug("Total: " + totalPriceRounded);
 		
-		// eseguo la stampa degli output degli articoli, con il prezzo finale ed i totali 
+		// do the output print of the the items, with the final price and the totals 
 		receipt = receipt + "<br/><br/><strong>Output " + purchaseNumber + ":</strong><br/>";
 		for (int i = 0; i < itemList.size(); i++) {
 			Item item = itemList.get(i);
@@ -158,14 +117,14 @@ public class SalesTaxesHelper {
 	
 	
 	/*
-	 * Metodo che si occupa di stampare a video la ricevuta dell'ordine senza output
+	 * Method that print the receipt without the output
 	 */
 	public String getPurchaseDescription(List<Item> itemList, String purchaseNumber){
 		
 		String receipt = EMPTY_STRING;
 		receipt = "<strong>Purchase " + purchaseNumber + " --> </strong>";
 		
-		// eseguo la stampa di tutti gli articoli coi relativi prezzi di partenza  
+		// do the print of all the items and their starting prices
 		for (Item item : itemList) { 
 			receipt = receipt + " 1 " + item.getItemName() + "; ";
 		}
@@ -175,8 +134,8 @@ public class SalesTaxesHelper {
 	
 	
 	/*
-	 * Metodo che ritorna un oggetto che wrappa la lista degli item dell'ordine effettuato,
-	 * coi rispettivi prezzi in base al numero dello stesso, ed una lista di eventuali errori
+	 * Method that returns an object that wrap the items list of the purchase,
+	 * with their prices by the purchase's number, and a list with eventual errors
 	 */
 	public ItemListVO getItemListByPurchaseNumber(String purchase) {
 		
@@ -187,17 +146,17 @@ public class SalesTaxesHelper {
 		String purchase1ItemDef = (String)prop.get(purchase);
 		String[] purchase1ItemDefArray = purchase1ItemDef.split(CHAR_SEMICOLON);
 		
-		// se esiste almeno un item nell'ordine proseguo nell'elaborazione
+		// if at least an item exists in the purchase go ahead
 		if (purchase1ItemDefArray.length>0) {
 			for (int i = 0; i < purchase1ItemDefArray.length; i++) {
 				String[] itemArray = purchase1ItemDefArray[i].split(CHAR_DASH);
 				
-				// se ogni item è composto di due parti (codice e prezzo) vado avanti
+				// if every item is composed by two parts (code and price) go ahead
 				if (itemArray.length == 2) {
 					String codItem = purchase1ItemDefArray[i].split(CHAR_DASH)[0];
 					String priceItem = purchase1ItemDefArray[i].split(CHAR_DASH)[1];
 					
-					// se il codice è valorizzato proseguo
+					// if code is not null go ahead
 					if (SalesTaxesUtility.isNotNullAndEmptyString(codItem)) {
 						String purchaseName = purchase.split("\\.")[0].toUpperCase();
 						String itemNameKey;
@@ -206,6 +165,7 @@ public class SalesTaxesHelper {
 							boolean isExempt = PurchaseItemsEnum.valueOf(codItem).isExempt();
 							boolean isImported = PurchaseItemsEnum.valueOf(codItem).isImported();
 							try {
+								// create the item object
 								itemList.add(new Item(purchaseName,
 										             (String)prop.getProperty(itemNameKey), 
 										             priceItem, 
@@ -216,10 +176,9 @@ public class SalesTaxesHelper {
 								errorMessagesList.add(e.getMessage());
 							}
 						} catch (Exception e1) {
-							logger.error("Errore di traduzione dal codice '" + codItem + "' nel nome dell'articolo per l'ordine " + purchaseName);
-							errorMessagesList.add("Errore di traduzione dal codice '" + codItem + "' nel nome dell'articolo per l'ordine " + purchaseName);
+							logger.error("Error occured in the translation from the code '" + codItem + "' to the item name fro the purchase " + purchaseName);
+							errorMessagesList.add("Error occured in the translation from the code '" + codItem + "' to the item name fro the purchase " + purchaseName);
 						}
-						
 					}
 				}
 			}

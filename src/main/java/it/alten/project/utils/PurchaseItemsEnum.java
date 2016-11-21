@@ -2,7 +2,7 @@ package it.alten.project.utils;
 
 
 /**
- * Enum che effettua la "traduzione" dal codice dell'articolo alla chiave della sua descrizione
+ * Enum object that translate from the item code to its key description
  * 
  * @author Prisma
  *

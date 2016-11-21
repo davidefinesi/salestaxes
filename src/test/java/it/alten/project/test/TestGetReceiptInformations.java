@@ -3,11 +3,9 @@ package it.alten.project.test;
 import static it.alten.project.utils.Constants.CHAR_COMMA;
 import static it.alten.project.utils.Constants.CHAR_DOT;
 import static it.alten.project.utils.Constants.FORMAT_STRING;
-import static org.junit.Assert.*;
-import it.alten.project.utils.SalesTaxesHelper;
-import it.alten.project.vo.ReceiptVO;
+import static org.junit.Assert.assertEquals;
+import it.alten.project.bean.Item;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 
@@ -20,21 +18,17 @@ import org.junit.Test;
  */
 public class TestGetReceiptInformations {
 	
-	private static String PROPERTY_FILE = "/salestaxes.properties";
-
 	
 	@Test
 	public void testGetReceiptInformationsPurchase1() {
 		
-		// istanzio la classe helper
-		SalesTaxesHelper helper = null;
 		try {
-			helper = new SalesTaxesHelper(PROPERTY_FILE);
 		
 			// recupero informazioni sul primo articolo
-			ReceiptVO receipt = helper.getReceiptInformations("BOOK", 12.49, true, false);
-			Double finalPrice1Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax1 = receipt.getPercentageTotalTax();
+			Item item1 = new Item("1", "BOOK", String.valueOf(12.49), true, false);
+			//ReceiptVO receipt = helper.getReceiptInformations("BOOK", 12.49, true, false);
+			Double finalPrice1Double = new Double((item1.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax1 = item1.getPercentageTotalTax();
 			
 			double expected = 12.49;
 			
@@ -43,9 +37,10 @@ public class TestGetReceiptInformations {
 			
 			
 			// recupero informazioni sul secondo articolo
-			receipt = helper.getReceiptInformations("MUSIC CD", 14.99, false, false);
-			Double finalPrice2Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax2 = receipt.getPercentageTotalTax();
+			//receipt = helper.getReceiptInformations("MUSIC CD", 14.99, false, false);
+			Item item2 = new Item("1", "MUSIC CD", String.valueOf(14.99), false, false);
+			Double finalPrice2Double = new Double((item2.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax2 = item2.getPercentageTotalTax();
 			
 			expected = 16.49;
 			
@@ -54,9 +49,10 @@ public class TestGetReceiptInformations {
 			
 			
 			// recupero informazioni sul terzo articolo
-			receipt = helper.getReceiptInformations("CHOCOLATE BAR", 0.85, true, false);
-			Double finalPrice3Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax3 = receipt.getPercentageTotalTax();
+			//receipt = helper.getReceiptInformations("CHOCOLATE BAR", 0.85, true, false);
+			Item item3 = new Item("1", "CHOCOLATE BAR", String.valueOf(0.85), true, false);
+			Double finalPrice3Double = new Double((item3.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax3 = item3.getPercentageTotalTax();
 			
 			expected = 0.85;
 			
@@ -93,15 +89,12 @@ public class TestGetReceiptInformations {
 	@Test
 	public void testGetReceiptInformationsPurchase2() {
 		
-		// istanzio la classe helper
-		SalesTaxesHelper helper = null;
 		try {
-			helper = new SalesTaxesHelper(PROPERTY_FILE);
 		
 			// recupero informazioni sul primo articolo
-			ReceiptVO receipt = helper.getReceiptInformations("IMPORTED BOX OF CHOCOLATES", 10.00, true, true);
-			Double finalPrice1Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax1 = receipt.getPercentageTotalTax();
+			Item item1 = new Item("2", "IMPORTED BOX OF CHOCOLATES", String.valueOf(10.00), true, true);
+			Double finalPrice1Double = new Double((item1.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax1 = item1.getPercentageTotalTax();
 			
 			double expected = 10.50;
 			
@@ -110,9 +103,9 @@ public class TestGetReceiptInformations {
 			
 			
 			// recupero informazioni sul secondo articolo
-			receipt = helper.getReceiptInformations("IMPORTED BOTTLE OF PERFUME", 47.50, false, true);
-			Double finalPrice2Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax2 = receipt.getPercentageTotalTax();
+			Item item2 = new Item("2", "IMPORTED BOTTLE OF PERFUME", String.valueOf(47.50), false, true);
+			Double finalPrice2Double = new Double((item2.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax2 = item2.getPercentageTotalTax();
 			
 			expected = 54.65;
 			
@@ -147,15 +140,13 @@ public class TestGetReceiptInformations {
 	@Test
 	public void testGetReceiptInformationsPurchase3() {
 		
-		// istanzio la classe helper
-		SalesTaxesHelper helper = null;
 		try {
-			helper = new SalesTaxesHelper(PROPERTY_FILE);
 		
 			// recupero informazioni sul primo articolo
-			ReceiptVO receipt = helper.getReceiptInformations("IMPORTED BOTTLE OF PERFUME", 27.99, false, true);
-			Double finalPrice1Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax1 = receipt.getPercentageTotalTax();
+			//ReceiptVO receipt = helper.getReceiptInformations("IMPORTED BOTTLE OF PERFUME", 27.99, false, true);
+			Item item1 = new Item("3", "IMPORTED BOTTLE OF PERFUME", String.valueOf(27.99), false, true);
+			Double finalPrice1Double = new Double((item1.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax1 = item1.getPercentageTotalTax();
 			
 			double expected = 32.19;
 			
@@ -164,9 +155,10 @@ public class TestGetReceiptInformations {
 			
 			
 			// recupero informazioni sul secondo articolo
-			receipt = helper.getReceiptInformations("BOTTLE OF PERFUME", 18.99, false, false);
-			Double finalPrice2Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax2 = receipt.getPercentageTotalTax();
+			//receipt = helper.getReceiptInformations("BOTTLE OF PERFUME", 18.99, false, false);
+			Item item2 = new Item("3", "BOTTLE OF PERFUME", String.valueOf(18.99), false, false);
+			Double finalPrice2Double = new Double((item2.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax2 = item2.getPercentageTotalTax();
 			
 			expected = 20.89;
 			
@@ -175,9 +167,10 @@ public class TestGetReceiptInformations {
 			
 			
 			// recupero informazioni sul terzo articolo
-			receipt = helper.getReceiptInformations("PACKET OF HEADACHE PILLS", 9.75, true, false);
-			Double finalPrice3Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax3 = receipt.getPercentageTotalTax();
+			//receipt = helper.getReceiptInformations("PACKET OF HEADACHE PILLS", 9.75, true, false);
+			Item item3 = new Item("3", "PACKET OF HEADACHE PILLS", String.valueOf(9.75), true, false);
+			Double finalPrice3Double = new Double((item3.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax3 = item3.getPercentageTotalTax();
 			
 			expected = 9.75;
 			
@@ -186,9 +179,10 @@ public class TestGetReceiptInformations {
 			
 			
 			// recupero informazioni sul quarto articolo
-			receipt = helper.getReceiptInformations("IMPORTED BOX OF CHOCOLATES", 11.25, true, true);
-			Double finalPrice4Double = new Double((receipt.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
-			String percentageTotalTax4 = receipt.getPercentageTotalTax();
+			//receipt = helper.getReceiptInformations("IMPORTED BOX OF CHOCOLATES", 11.25, true, true);
+			Item item4 = new Item("3", "IMPORTED BOX OF CHOCOLATES", String.valueOf(11.25), true, true);
+			Double finalPrice4Double = new Double((item4.getFinalPrice()).replace(CHAR_COMMA, CHAR_DOT));
+			String percentageTotalTax4 = item4.getPercentageTotalTax();
 			
 			expected = 11.85;
 			

@@ -1,5 +1,6 @@
 package it.alten.project.test;
 
+import static it.alten.project.utils.Constants.EMPTY_STRING;
 import static org.junit.Assert.assertEquals;
 import it.alten.project.utils.SalesTaxesHelper;
 
@@ -18,12 +19,11 @@ public class TestPropertiesFile {
 	@Test
 	public void testValidPropertiesFile1() {
 		
-		// istanzio la classe helper
-		SalesTaxesHelper helper = null;
 		try {
-			helper = new SalesTaxesHelper("/my_salestaxes.properties");
+			// istanzio la classe helper
+			new SalesTaxesHelper("/my_salestaxes.properties");
 		} catch (Exception e) {
-			assertEquals("File di properties non presente", e.getMessage());
+			assertEquals("Properties file not present", e.getMessage());
 		}
 
 	}
@@ -32,12 +32,11 @@ public class TestPropertiesFile {
 	@Test
 	public void testValidPropertiesFile2() {
 		
-		// istanzio la classe helper
-		SalesTaxesHelper helper = null;
 		try {
-			helper = new SalesTaxesHelper("");
+			// istanzio la classe helper
+			new SalesTaxesHelper(EMPTY_STRING);
 		} catch (Exception e) {
-			assertEquals("File di properties non presente", e.getMessage());
+			assertEquals("Properties file not present", e.getMessage());
 		}
 
 	}

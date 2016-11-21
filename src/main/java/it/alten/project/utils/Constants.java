@@ -1,5 +1,12 @@
 package it.alten.project.utils;
 
+
+/**
+ * Class of constants
+ * 
+ * @author Prisma
+ *
+ */
 public class Constants {
 	
 	public static final String COMPLETE_PURCHASE_ID		= "-1";

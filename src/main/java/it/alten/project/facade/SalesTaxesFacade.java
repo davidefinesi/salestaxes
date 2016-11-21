@@ -6,8 +6,8 @@ import it.alten.project.vo.ItemListVO;
 
 
 /**
- * Classe Facade nata dalla necessità di disaccoppiare lo strato del servizio REST da quello di "business" e
- * nel contempo semplificare con un unico punto di accesso per il servizio tutta la logica di business stessa
+ * Facade class that decouple the REST service layer and the pure "business" layer, and simplify with only one access point
+ * the whole business logic itself
  * 
  * @author Prisma
  *
@@ -19,17 +19,17 @@ public class SalesTaxesFacade {
 	
 	
 	/*
-	 * Metodo di business che restituisce la stringa (html) rappresentante la "ricevuta" dell'ordine effettuato
+	 * Business method that return html string representing the receipt of the purchase
 	 */
 	public static String getPurchaseReceipt(String purchaseId){
 		
 		try {
 			helper = new SalesTaxesHelper(PROPERTY_FILE);
 		
-			// recupero la lista degli articoli
+			// get the items list
 			ItemListVO itemList1VO = helper.getItemListByPurchaseNumber("purchase" + purchaseId + ".items");
 			
-			// eseguo la stampa della ricevuta
+			// print the receipt
 			return helper.getStringReceipt(itemList1VO.getItemList(), purchaseId);
 		
 		} catch (Exception e) {
@@ -39,7 +39,7 @@ public class SalesTaxesFacade {
 	
 	
 	/*
-	 * Metodo di business che restituisce la stringa (html) rappresentante la "ricevuta" dell'ordine completo (tutti e tre)
+	 * Business method tha return the html string representing the receipt of the whole purchase (1, 2 and 3)
 	 */
 	public static String getCompletePurchaseReceipt(){
 		
@@ -64,7 +64,7 @@ public class SalesTaxesFacade {
 	
 	
 	/*
-	 * Metodo di business che restituisce la stringa (html) rappresentante la descrizione degli ordini effettuabili
+	 * Business method that returns html string representing the descrption of the purchases
 	 */
 	public static String getPurchasesDescription(){
 		
